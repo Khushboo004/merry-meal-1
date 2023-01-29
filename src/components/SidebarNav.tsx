@@ -21,10 +21,10 @@ const SidebarNav = (props: Props) => {
             "&.Mui-selected": {
               backgroundColor: "rgb(74 222 128)",
               color: "white",
-            },
-            "&.Mui-focusVisible": {
-              color: "white",
-              backgroundColor: "rgb(74 222 128)",
+              "&.Mui-focusVisible": {
+                color: "white",
+                backgroundColor: "rgb(74 222 128)",
+              },
             },
           },
         },
@@ -64,25 +64,30 @@ const SidebarNav = (props: Props) => {
               User Info
             </MenuItem>
           </Link>
-
-          <MenuItem>
-            <ListItemIcon>
-              <DinnerDiningIcon fontSize="small" />
-            </ListItemIcon>
-            Meal Status
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <DeliveryDiningIcon fontSize="small" />
-            </ListItemIcon>
-            Delivery Status
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <VolunteerActivismIcon fontSize="small" />
-            </ListItemIcon>
-            Donation
-          </MenuItem>
+          <Link to={"/mealinfo"}>
+            <MenuItem>
+              <ListItemIcon>
+                <DinnerDiningIcon fontSize="small" />
+              </ListItemIcon>
+              Meal Status
+            </MenuItem>
+          </Link>
+          <Link to={"/deliinfo"}>
+            <MenuItem>
+              <ListItemIcon>
+                <DeliveryDiningIcon fontSize="small" />
+              </ListItemIcon>
+              Delivery Status
+            </MenuItem>
+          </Link>
+          <Link to={"/donateinfo"}>
+            <MenuItem>
+              <ListItemIcon>
+                <VolunteerActivismIcon fontSize="small" />
+              </ListItemIcon>
+              Donation
+            </MenuItem>
+          </Link>
         </MenuList>
       </Stack>
     </ThemeProvider>
