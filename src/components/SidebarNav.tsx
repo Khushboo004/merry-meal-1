@@ -7,6 +7,8 @@ import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import { Link, useSearchParams } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CaregiverSidebar from "./Dashboard/CareGiver/CaregiverSidebar";
+import PartnerSidebar from "./Dashboard/Partner/PartnerSidebar";
 type Props = {
   role: String;
 };
@@ -139,6 +141,20 @@ const SidebarNav = (props: Props) => {
                   Assess Food
                 </MenuItem>
               </Link>
+            </>
+          ) : (
+            <></>
+          )}
+          {role === "CAREGIVER" ? (
+            <>
+              <CaregiverSidebar />
+            </>
+          ) : (
+            <></>
+          )}
+          {role === "PARTNER" ? (
+            <>
+              <PartnerSidebar />
             </>
           ) : (
             <></>

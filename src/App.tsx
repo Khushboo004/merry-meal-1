@@ -13,15 +13,65 @@ import DeliverDetail from "./components/Rider/DeliverDetail";
 import { useState } from "react";
 import ProtectedRoute from "./components/Security/ProtectedRoute";
 import MealAssess from "./components/Volunteer/MealAssess";
+import Home from "./pages/Home";
+import PublicUser from "./pages/publicUser/PublicUser";
+import Meal from "./pages/Meal";
+import MealDetails from "./pages/MealDetails";
+import AddCart from "./pages/AddCart";
+import Login from "./pages/Login";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+import Registration from "./pages/Registration";
+import CaregiverReq from "./pages/CaregiverReq";
+import EditProfile from "./pages/EditProfile";
+import AddMeal from "./pages/Partner/AddMeal";
+import TimeTable from "./pages/CareGiver/TimeTable";
+import UserHome from "./pages/Partner/UserHome";
+import CareGiverHome from "./pages/CareGiver/CareGiverHome";
 
 function App() {
   const [auth, setAuth] = useState({
     name: "Aung Thiha Tun",
-    role: ["ADMIN", "VOLUNTEER", "RIDER", "CAREGIVER", "PARTNER", "MEMBER"],
+    role: [
+      "ADMIN",
+      "VOLUNTEER",
+      "RIDER",
+      "CAREGIVER",
+      "PARTNER",
+      "MEMBER",
+      "PARTNER",
+    ],
   });
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
+        <Route path="/" element={<Home />}>
+          <Route index element={<PublicUser />}></Route>
+          <Route path={"meals"} element={<Meal />} />
+          <Route path={"meal-details"} element={<MealDetails />} />
+          <Route path={"add-cart"} element={<AddCart />} />
+          <Route path={"login"} element={<Login />} />
+          <Route path={"about-us"} element={<AboutUs />} />
+          <Route path={"contact-us"} element={<ContactUs />} />
+          <Route path={"register"} element={<Registration />} />
+          <Route path={"caregiverReq"} element={<CaregiverReq />} />
+          <Route path={"profile"} element={<Profile />}></Route>
+          <Route path={"edit-pro"} element={<EditProfile />}></Route>
+          <Route path={"time-table"} element={<TimeTable />} />
+          <Route path={"edit-pro"} element={<EditProfile />} />
+        </Route>
+
+        <Route
+          element={
+            <ProtectedRoute isAllowed={auth.role.includes("CAREGIVER")} />
+          }
+        />
+        <Route path={"/caregiver"} element={<Dashboard role={"CAREGIVER"} />}>
+          <Route index element={<CareGiverHome />}></Route>
+          <Route path={"profile"} element={<Profile />}></Route>
+          <Route path={"time-table"} element={<TimeTable />} />
+        </Route>
+
         <Route
           element={<ProtectedRoute isAllowed={auth.role.includes("ADMIN")} />}
         >
@@ -45,6 +95,17 @@ function App() {
               <Route index element={<DeliverList />}></Route>
               <Route path={"detail"} element={<DeliverDetail />}></Route>
             </Route>
+          </Route>
+        </Route>
+        <Route
+          element={<ProtectedRoute isAllowed={auth.role.includes("PARTNER")} />}
+        >
+          <Route path={"/partner"} element={<Dashboard role={"PARTNER"} />}>
+            <Route index element={<UserHome />}></Route>
+            <Route path={"meals"} element={<Meal />}></Route>
+            <Route path={"meals/details"} element={<MealDetails />} />
+            <Route path={"profile"} element={<Profile />}></Route>
+            <Route path={"add-meal"} element={<AddMeal />}></Route>
           </Route>
         </Route>
         <Route

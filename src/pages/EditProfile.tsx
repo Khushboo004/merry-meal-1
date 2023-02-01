@@ -1,54 +1,40 @@
-import { Avatar, TextField, MenuItem } from "@mui/material";
+import { Avatar, TextField, MenuItem, Grid, Container } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 import dayjs from "dayjs";
 import {
   DesktopDatePicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { forwardRef, ReactElement, useState } from "react";
-import { TransitionProps } from "@mui/material/transitions";
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 type Props = {};
 
-const Profile = (props: Props) => {
+const EditProfile = (props: Props) => {
   const birth = new Date(2002, 4, 4);
   const bornOn = dayjs(birth);
   const gender = ["Male", "Female"];
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
-    <div className="p-10">
-      <div className="flex justify-center">
-        <Avatar sx={{ bgcolor: deepOrange[500], width: 55, height: 55 }}>
+    <div className="p-10 mb-32 mt-7 ">
+        <Container maxWidth={'lg'} className="shadow-md">
+      <div className="my-3 ">
+     
+      <div className="flex justify-center ">
+        <Avatar sx={{ bgcolor: deepOrange[500], width: 150, height: 150 }}>
           N
         </Avatar>
+        
       </div>
-      <div className="grid grid-cols-2 lg:px-36 mt-8">
-        <div className="p-3 font-bold">Name</div>
+      <div className="flex justify-center mt-2">
+								<input type="file" name="profileImage"
+									placeholder="Change Photo" id="profileImage"/>
+							</div>
+      </div>
+      {/* <Container maxWidth={'lg'}> */}
+      <Grid container mt={2} spacing={2} >
+      <Grid item  xs={4}>
+        <div className="p-3 font-bold  ">Name</div>
+        </Grid>
+        <Grid item  xs={8}>
         <div className="">
           <TextField
             helperText="Please enter your name"
@@ -58,9 +44,12 @@ const Profile = (props: Props) => {
             style={{ width: "100%" }}
           />
         </div>
-      </div>
-      <div className="grid grid-cols-2 lg:px-36 mt-5">
+        </Grid>
+        <Grid item  xs={4}>
+    
         <div className="p-3 font-bold">Gender</div>
+        </Grid>
+        <Grid item  xs={8}>
         <div>
           <TextField
             id="outlined-select-gender"
@@ -79,9 +68,11 @@ const Profile = (props: Props) => {
             ))}
           </TextField>
         </div>
-      </div>
-      <div className="grid grid-cols-2 lg:px-36 mt-5">
+     </Grid>
+     <Grid item  xs={4}>
         <div className="p-3 font-bold">Birth</div>
+        </Grid>
+        <Grid item  xs={8}>
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
@@ -92,10 +83,14 @@ const Profile = (props: Props) => {
               onChange={() => {}}
             />
           </LocalizationProvider>
-        </div>
+       
+      
       </div>
-      <div className="grid grid-cols-2 lg:px-36 mt-5">
+      </Grid>
+      <Grid item  xs={4}>
         <div className="p-3 font-bold">Contact Number</div>
+        </Grid>
+        <Grid item  xs={8}>
         <div>
           <TextField
             id="outlined-number"
@@ -117,9 +112,11 @@ const Profile = (props: Props) => {
             ))}
           </TextField>
         </div>
-      </div>
-      <div className="grid grid-cols-2 lg:px-36 mt-5">
+      </Grid>
+      <Grid item  xs={4}>
         <div className="p-3 font-bold">Detail</div>
+        </Grid>
+        <Grid item  xs={8}>
         <div>
           <TextField
             id="standard-multiline-static"
@@ -130,37 +127,16 @@ const Profile = (props: Props) => {
             style={{ width: "100%" }}
           />
         </div>
+     </Grid>
+     <Grid item  xs={12}>
+     <div className="flex justify-center p-3 my-2">
+      <button className="p-3 bg-orange-800 text-xl font-bold hover:bg-orange-700 text-white rounded-lg">Change</button>
       </div>
-      <div className="lg:px-36">
-        <button
-          className="p-2 rounded-md bg-green-400 shadow-md shadow-green-300
-          text-white"
-          onClick={handleClickOpen}
-        >
-          Edit Profile
-        </button>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{"Confirmation for Edit"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Do You Want To <b>Replace</b> Your Profile With exisiting profile
-              information.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Save Changes</Button>
-            <Button onClick={handleClose}>Cancel</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      </Grid>
+     </Grid>
+    </Container>
     </div>
   );
 };
 
-export default Profile;
+export default EditProfile;
