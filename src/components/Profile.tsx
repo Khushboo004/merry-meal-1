@@ -1,11 +1,29 @@
 import { Avatar, TextField, MenuItem } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
 import dayjs from "dayjs";
 import {
   DesktopDatePicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers-pro";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { forwardRef, ReactElement, useState } from "react";
+import { TransitionProps } from "@mui/material/transitions";
+
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 type Props = {};
 
@@ -13,6 +31,15 @@ const Profile = (props: Props) => {
   const birth = new Date(2002, 4, 4);
   const bornOn = dayjs(birth);
   const gender = ["Male", "Female"];
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className="p-10">
       <div className="flex justify-center">
@@ -103,6 +130,34 @@ const Profile = (props: Props) => {
             style={{ width: "100%" }}
           />
         </div>
+      </div>
+      <div className="px-36">
+        <button
+          className="p-2 rounded-md bg-green-400 shadow-md shadow-green-300
+          text-white"
+          onClick={handleClickOpen}
+        >
+          Edit Profile
+        </button>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>{"Confirmation for Edit"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Do You Want To <b>Replace</b> Your Profile With exisiting profile
+              information.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Save Changes</Button>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

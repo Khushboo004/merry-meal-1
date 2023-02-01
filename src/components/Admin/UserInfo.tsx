@@ -2,7 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
-import ViewMore from "./ViewMore";
+import ViewMore from "../ViewMore";
 type Props = {};
 
 const UserInfo = (props: Props) => {

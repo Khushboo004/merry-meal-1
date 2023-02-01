@@ -1,6 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { FormControl, InputLabel, NativeSelect } from "@mui/material";
-import ViewMore from "./ViewMore";
+import ViewMore from "../ViewMore";
 type Props = {};
 
 const DonationManagement = (props: Props) => {
@@ -20,28 +20,6 @@ const DonationManagement = (props: Props) => {
             />
           </div>
         </div>
-      </div>
-      <div className="py-5 px-5">
-        <FormControl>
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-            Status
-          </InputLabel>
-          <NativeSelect
-            defaultValue={"all"}
-            inputProps={{
-              name: "age",
-              id: "uncontrolled-native",
-            }}
-          >
-            <option value={"all"}>All</option>
-            <option value={"Fruits"}>Fruits</option>
-            <option value={"Vegetables"}>Vegetables</option>
-            <option value={"Healthy Foods"}>Healthy Foods</option>
-            <option value={"Drinks"}>Drinks</option>
-            <option value={"Unhealthy Foods"}>Unhealthy Foods</option>
-            <option value={"Sweets"}>Sweets</option>
-          </NativeSelect>
-        </FormControl>
       </div>
       <div className="p-4">
         <table className="table-auto border rounded-md">

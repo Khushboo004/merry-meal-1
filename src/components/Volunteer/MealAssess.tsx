@@ -1,10 +1,36 @@
 import { FormControl, InputLabel, NativeSelect } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import ViewMore from "./ViewMore";
-
+import ViewMore from "../ViewMore";
+import React, { useState } from "react";
 type Props = {};
 
-const MealManagement = (props: Props) => {
+const MealAssess = (props: Props) => {
+  const allMeals = [
+    {
+      name: "Meal Name",
+      category: "Vegetables",
+      status: "Unsafe",
+      img: "Meal Img",
+      desc: "Meal Description",
+    },
+    {
+      name: "Meal Name",
+      category: "Fruits",
+      status: "Safe",
+      img: "Meal Img",
+      desc: "Meal Description",
+    },
+  ];
+
+  const [mealRows, setMealRows] = useState(allMeals);
+  const filteringMeal = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value === "all") {
+      setMealRows(allMeals);
+      return;
+    }
+    setMealRows(allMeals.filter((meal) => meal.category === e.target.value));
+  };
+
   return (
     <div className="py-5">
       <h1 className="text-4xl font-bold text-green-400 text-center">
@@ -33,6 +59,7 @@ const MealManagement = (props: Props) => {
               name: "age",
               id: "uncontrolled-native",
             }}
+            onChange={(e) => filteringMeal(e)}
           >
             <option value={"all"}>All</option>
             <option value={"Fruits"}>Fruits</option>
@@ -58,38 +85,21 @@ const MealManagement = (props: Props) => {
             </tr>
           </thead>
           <tbody className="text-sm">
-            <tr>
-              <td className="p-5">No.</td>
-              <td className="p-5">Meal Name</td>
-              <td className="p-5">Meal Category</td>
-              <td className="p-5">Meal Status</td>
-              <td className="p-5">Meal Img</td>
-              <td className="p-5">Meal Description</td>
-              <td className="p-2">
-                <button className="p-2 bg-green-500 rounded-md text-white mr-3">
-                  Edit
-                </button>
-                <button className="p-2 bg-red-500 rounded-md text-white ">
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td className="p-5">No.</td>
-              <td className="p-5">Meal Name</td>
-              <td className="p-5">Meal Category</td>
-              <td className="p-5">Meal Status</td>
-              <td className="p-5">Meal Img</td>
-              <td className="p-5">Meal Description</td>
-              <td className="p-2">
-                <button className="p-2 bg-green-500 rounded-md text-white mr-3">
-                  Edit
-                </button>
-                <button className="p-2 bg-red-500 rounded-md text-white ">
-                  Delete
-                </button>
-              </td>
-            </tr>
+            {mealRows.map((meal, index) => (
+              <tr>
+                <td className="p-5">{index + 1}</td>
+                <td className="p-5">{meal.name}</td>
+                <td className="p-5">{meal.category}</td>
+                <td className="p-5">{meal.status}</td>
+                <td className="p-5">{meal.img}</td>
+                <td className="p-5">{meal.desc}</td>
+                <td className="p-2">
+                  <button className="p-2 bg-green-500 rounded-md text-white mr-3">
+                    View Detail
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -98,4 +108,4 @@ const MealManagement = (props: Props) => {
   );
 };
 
-export default MealManagement;
+export default MealAssess;

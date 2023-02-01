@@ -5,11 +5,16 @@ import RecentActorsIcon from "@mui/icons-material/RecentActors";
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-type Props = {};
+type Props = {
+  role: String;
+};
 
 const SidebarNav = (props: Props) => {
+  const { role } = props;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const uri = role?.toLowerCase();
   const theme = createTheme({
     components: {
       MuiMenuItem: {
@@ -39,55 +44,105 @@ const SidebarNav = (props: Props) => {
     <ThemeProvider theme={theme}>
       <Stack direction="column">
         <MenuList>
-          <Link to={"/dataSummary"}>
-            <MenuItem value="dataSummary">
-              <ListItemIcon>
-                <SummarizeIcon fontSize="small" />
-              </ListItemIcon>
-              Info Summary
-            </MenuItem>
-          </Link>
-          <Link to={"/profile"}>
-            <MenuItem>
-              <ListItemIcon>
-                <PersonIcon fontSize="small" />
-              </ListItemIcon>
-              My Profile
-            </MenuItem>
-          </Link>
+          {role === "ADMIN" && window.location.toString().includes("admin") ? (
+            <>
+              <Link to={`/${uri}/dataSummary`}>
+                <MenuItem value="dataSummary">
+                  <ListItemIcon>
+                    <SummarizeIcon fontSize="small" />
+                  </ListItemIcon>
+                  Info Summary
+                </MenuItem>
+              </Link>
+              <Link to={`/${uri}/profile`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  My Profile
+                </MenuItem>
+              </Link>
 
-          <Link to={"/userinfo"}>
-            <MenuItem>
-              <ListItemIcon>
-                <RecentActorsIcon fontSize="small" />
-              </ListItemIcon>
-              User Info
-            </MenuItem>
-          </Link>
-          <Link to={"/mealinfo"}>
-            <MenuItem>
-              <ListItemIcon>
-                <DinnerDiningIcon fontSize="small" />
-              </ListItemIcon>
-              Meal Status
-            </MenuItem>
-          </Link>
-          <Link to={"/deliinfo"}>
-            <MenuItem>
-              <ListItemIcon>
-                <DeliveryDiningIcon fontSize="small" />
-              </ListItemIcon>
-              Delivery Status
-            </MenuItem>
-          </Link>
-          <Link to={"/donateinfo"}>
-            <MenuItem>
-              <ListItemIcon>
-                <VolunteerActivismIcon fontSize="small" />
-              </ListItemIcon>
-              Donation
-            </MenuItem>
-          </Link>
+              <Link to={`/${uri}/userinfo`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <RecentActorsIcon fontSize="small" />
+                  </ListItemIcon>
+                  User Info
+                </MenuItem>
+              </Link>
+              <Link to={`/${uri}/mealinfo`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <DinnerDiningIcon fontSize="small" />
+                  </ListItemIcon>
+                  Meal Status
+                </MenuItem>
+              </Link>
+              <Link to={`/${uri}/deliinfo`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <DeliveryDiningIcon fontSize="small" />
+                  </ListItemIcon>
+                  Delivery Status
+                </MenuItem>
+              </Link>
+              <Link to={`/${uri}/donateinfo`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <VolunteerActivismIcon fontSize="small" />
+                  </ListItemIcon>
+                  Donation
+                </MenuItem>
+              </Link>
+            </>
+          ) : (
+            <></>
+          )}
+          {role === "RIDER" ? (
+            <>
+              <Link to={`/${uri}/profile`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  My Profile
+                </MenuItem>
+              </Link>
+              <Link to={`/${uri}/deliveries`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <RecentActorsIcon fontSize="small" />
+                  </ListItemIcon>
+                  Delivery Info
+                </MenuItem>
+              </Link>
+            </>
+          ) : (
+            <></>
+          )}
+          {role === "VOLUNTEER" ? (
+            <>
+              <Link to={`/${uri}/profile`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  My Profile
+                </MenuItem>
+              </Link>
+              <Link to={`/${uri}/assessfood`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <RecentActorsIcon fontSize="small" />
+                  </ListItemIcon>
+                  Assess Food
+                </MenuItem>
+              </Link>
+            </>
+          ) : (
+            <></>
+          )}
         </MenuList>
       </Stack>
     </ThemeProvider>

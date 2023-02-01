@@ -9,19 +9,28 @@ import {
   Divider,
 } from "@mui/material";
 import { Logout } from "@mui/icons-material";
-type Props = {};
+import { useNavigate } from "react-router-dom";
+type Props = {
+  role: String;
+};
 
 const DashboardNav = (props: Props) => {
+  const { role } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const navigate = useNavigate();
   const handleClose = () => {
     setAnchorEl(null);
+    navigate(`/${role?.toLowerCase()}`);
   };
   return (
-    <div className="sticky top-0 z-20 bg-white backdrop-filter backdrop-blur-lg bg-opacity-30 p-2 text-bold text-xl flex justify-end border">
+    <div
+      className="sticky top-0 z-20 bg-white backdrop-filter 
+    backdrop-blur-lg bg-opacity-30 p-2 text-bold text-xl flex justify-end border"
+    >
       <Tooltip title="Account Nav">
         <IconButton onClick={(e) => handleClick(e)}>
           <Avatar sx={{ width: 40, height: 40 }}>N</Avatar>
