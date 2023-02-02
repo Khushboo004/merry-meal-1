@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import React, { useState } from "react";
 import Google from "../../../assets/google.png";
+import { login } from "../../../services/AuthService";
 
 interface FormData {
   email: string;
@@ -35,8 +36,13 @@ const FormLogin: React.FC = () => {
     event.preventDefault();
     setSubmitting(true);
     if (validate()) {
-      console.log("Form is valid, send data to the server");
-      // Do something with the form data here
+      login(formData.email, formData.password)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     setSubmitting(false);
   };

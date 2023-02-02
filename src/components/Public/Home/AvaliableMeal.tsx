@@ -10,6 +10,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 const AvaliableMeal = () => {
   return (
     <div>
@@ -58,11 +59,11 @@ const AvaliableMeal = () => {
                     <CardActions
                       style={{ display: "flex", justifyContent: "center" }}
                     >
-                      <a href="/meal-details">
+                      <Link to={"/meal-details"}>
                         <button className=" bg-green-700 py-2 hover:bg-green-600 w-[80px] border hover:border-black  text-white rounded-md mx-auto ">
                           Details
                         </button>
-                      </a>
+                      </Link>
                     </CardActions>
                   </Card>
                 </Grid>

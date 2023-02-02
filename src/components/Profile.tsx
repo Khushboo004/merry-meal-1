@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import {
   DesktopDatePicker,
   LocalizationProvider,
@@ -16,6 +16,14 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { forwardRef, ReactElement, useState } from "react";
 import { TransitionProps } from "@mui/material/transitions";
 
+interface ProfileData {
+  name: string;
+  bornOn: Dayjs;
+  gender: string;
+  image: string;
+  summary: string;
+  contact: string;
+}
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
     children: ReactElement<any, any>;
@@ -29,8 +37,24 @@ type Props = {};
 
 const Profile = (props: Props) => {
   const birth = new Date(2002, 4, 4);
-  const bornOn = dayjs(birth);
-  const gender = ["Male", "Female"];
+  const bornOnDemo = dayjs(birth);
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [image, setImage] = useState("");
+  const [summary, setSummary] = useState("");
+  const [contact, setContact] = useState("");
+  const [bornOn, setBornOn] = useState(bornOnDemo);
+
+  const formData: ProfileData = {
+    name: name,
+    bornOn: bornOn,
+    gender: gender,
+    image: image,
+    summary: summary,
+    contact: contact,
+  };
+
+  const genderOptions = ["Male", "Female"];
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -40,10 +64,21 @@ const Profile = (props: Props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const displayDate = (date: any) => {
+    const day = date.get("D");
+    const month = date.get("M");
+    const year = date.get("y");
+    const birthYear = new Date(year, month - 1, day);
+    const bornOnDemo = dayjs(birthYear);
+    setBornOn(bornOnDemo);
+    console.log(`${year}/${month}/${day}`);
+  };
   return (
     <div className="p-10">
       <div className="flex justify-center">
-        <Avatar sx={{ bgcolor: deepOrange[500], width: 55, height: 55 }}>
+        <Avatar sx={{ bgcolor: deepOrange[500], width: 55, height: 55 }}
+        src ={formData.image}>
           N
         </Avatar>
       </div>
@@ -54,7 +89,8 @@ const Profile = (props: Props) => {
             helperText="Please enter your name"
             id="demo-helper-text-aligned"
             label="Name"
-            defaultValue={"Aung Thiha Tun"}
+            value={formData.name}
+            onChange={(e) => setName(e.target.value)}
             style={{ width: "100%" }}
           />
         </div>
@@ -66,13 +102,14 @@ const Profile = (props: Props) => {
             id="outlined-select-gender"
             select
             label="Select"
-            defaultValue="Male"
+            value={formData.gender}
             helperText="Please Select Your Gender"
+            onChange={(e) => setGender(e.target.value)}
             style={{
               width: "100%",
             }}
           >
-            {gender.map((gen) => (
+            {genderOptions.map((gen) => (
               <MenuItem key={gen} value={gen}>
                 {gen}
               </MenuItem>
@@ -87,9 +124,9 @@ const Profile = (props: Props) => {
             <DesktopDatePicker
               label="Date desktop"
               inputFormat="MM/DD/YYYY"
-              value={bornOn}
+              value={formData.bornOn}
               renderInput={(params) => <TextField {...params} />}
-              onChange={() => {}}
+              onChange={(e) => displayDate(e)}
             />
           </LocalizationProvider>
         </div>
@@ -101,21 +138,16 @@ const Profile = (props: Props) => {
             id="outlined-number"
             label="Phone No."
             type="number"
-            defaultValue={959958222263}
+            value={formData.contact}
             InputLabelProps={{
               shrink: true,
             }}
+            onChange={(e) => setContact(e.target.value)}
             helperText="Please Input Your Contact Number"
             style={{
               width: "100%",
             }}
-          >
-            {gender.map((gen) => (
-              <MenuItem key={gen} value={gen}>
-                {gen}
-              </MenuItem>
-            ))}
-          </TextField>
+          ></TextField>
         </div>
       </div>
       <div className="grid grid-cols-2 lg:px-36 mt-5">
@@ -126,7 +158,8 @@ const Profile = (props: Props) => {
             label="Summary About You"
             multiline
             rows={4}
-            defaultValue="..."
+            onChange={(e) => setSummary(e.target.value)}
+            value={formData.summary}
             style={{ width: "100%" }}
           />
         </div>
@@ -139,6 +172,15 @@ const Profile = (props: Props) => {
         >
           Edit Profile
         </button>
+
+        <button
+          className="p-2 rounded-md bg-green-400 shadow-md shadow-green-300
+          text-white"
+          onClick={handleClickOpen}
+        >
+          Submit Profile
+        </button>
+        
         <Dialog
           open={open}
           TransitionComponent={Transition}
